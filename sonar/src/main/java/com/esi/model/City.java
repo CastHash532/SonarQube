@@ -1,4 +1,4 @@
-package com.example.model;
+package com.esi.model;
 
 public class City {
     private int idCity;

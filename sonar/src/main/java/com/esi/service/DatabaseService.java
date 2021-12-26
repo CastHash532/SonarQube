@@ -1,6 +1,6 @@
-package com.example.service;
+package com.esi.service;
 
-import com.example.model.City;
+import com.esi.model.City;
 
 import java.sql.*;
 import java.util.ArrayList;

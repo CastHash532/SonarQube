@@ -1,8 +1,8 @@
-package com.example.main;
+package com.esi.main;
 
-import com.example.model.City;
-import com.example.service.DatabaseConnection;
-import com.example.service.DatabaseService;
+import com.esi.model.City;
+import com.esi.service.DatabaseConnection;
+import com.esi.service.DatabaseService;
 
 import java.sql.Connection;
 import java.util.List;
