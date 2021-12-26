@@ -9,5 +9,8 @@ next you need to generate an AuthenticationToken on SonarQube Platform
   
 to analyze code open a terminal and run:  
 ``
-mvn sonar:sonar -Dsonar.login=AuthenticationToken
+mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=sonar \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=**AuthenticationToken**replace here
 ``
