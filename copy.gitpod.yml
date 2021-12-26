@@ -1,5 +1,0 @@
-tasks:
-  - name: 
-    before: 
-    init: mvn install
-    command: 
