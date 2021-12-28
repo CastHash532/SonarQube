@@ -6,8 +6,22 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//logger
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 public class DatabaseService {
 
+    private static final String IDCITY = "idCity";
+    private static final String TOURISTNUMBER = "touristNumber";
+    private static final String DESCRIPTION = "description";
+    private static final String NAME = "name";
+    private static final String ERROR_MESSAGE = "Error while executing query";
+
+    private DatabaseService() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static int addCity(Connection conn, City city) {
         PreparedStatement pstmt = null;
@@ -29,6 +43,8 @@ public class DatabaseService {
             try {
                 if (pstmt != null) pstmt.close();
             } catch (SQLException se2) {
+                Logger logger = LoggerFactory.getLogger(DatabaseService.class);
+                logger.error(ERROR_MESSAGE, se2);
             }
         }
         return i;
@@ -45,10 +61,10 @@ public class DatabaseService {
             pstmt.setInt(1,idCity);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                city.setIdCity(rs.getInt("idCity"));
-                city.setName(rs.getString("name"));
-                city.setTouristNumber(rs.getInt("touristNumber"));
-                city.setDescription(rs.getString("description"));
+                city.setIdCity(rs.getInt(IDCITY));
+                city.setName(rs.getString(NAME));
+                city.setTouristNumber(rs.getInt(TOURISTNUMBER));
+                city.setDescription(rs.getString(DESCRIPTION));
             }
             rs.close();
             pstmt.close();
@@ -58,6 +74,8 @@ public class DatabaseService {
             try {
                 if (pstmt != null) pstmt.close();
             } catch (SQLException se2) {
+                Logger logger = LoggerFactory.getLogger(DatabaseService.class);
+                logger.error(ERROR_MESSAGE, se2);
             }
         }
         return  city;
@@ -75,10 +93,10 @@ public class DatabaseService {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 City city = new City();
-                city.setIdCity(rs.getInt("idCity"));
-                city.setName(rs.getString("name"));
-                city.setTouristNumber(rs.getInt("touristNumber"));
-                city.setDescription(rs.getString("description"));
+                city.setIdCity(rs.getInt(IDCITY));
+                city.setName(rs.getString(NAME));
+                city.setTouristNumber(rs.getInt(TOURISTNUMBER));
+                city.setDescription(rs.getString(DESCRIPTION));
                 cities.add(city);
             }
             rs.close();
@@ -89,6 +107,8 @@ public class DatabaseService {
             try {
                 if (stmt != null) stmt.close();
             } catch (SQLException se2) {
+                Logger logger = LoggerFactory.getLogger(DatabaseService.class);
+                logger.error(ERROR_MESSAGE, se2);
             }
         }
         return  cities;
@@ -106,10 +126,10 @@ public class DatabaseService {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
 
-                city.setIdCity(rs.getInt("idCity"));
-                city.setName(rs.getString("name"));
-                city.setTouristNumber(rs.getInt("touristNumber"));
-                city.setDescription(rs.getString("description"));
+                city.setIdCity(rs.getInt(IDCITY));
+                city.setName(rs.getString(NAME));
+                city.setTouristNumber(rs.getInt(TOURISTNUMBER));
+                city.setDescription(rs.getString(DESCRIPTION));
             }
             rs.close();
             stmt.close();
@@ -119,6 +139,8 @@ public class DatabaseService {
             try {
                 if (stmt != null) stmt.close();
             } catch (SQLException se2) {
+                Logger logger = LoggerFactory.getLogger(DatabaseService.class);
+                logger.error(ERROR_MESSAGE, se2);
             }
         }
         return city;

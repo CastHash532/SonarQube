@@ -5,7 +5,9 @@ import com.esi.service.DatabaseConnection;
 import com.esi.service.DatabaseService;
 
 import java.sql.Connection;
-import java.util.List;
+
+//slf4j
+import org.slf4j.Logger;
 
 public class Home {
 
@@ -28,7 +30,8 @@ public class Home {
             }
         }
         catch (NumberFormatException e) {
-            System.err.println("Arguments" + args[0] + args[2] + " must be an integer.");
+            Logger logger = org.slf4j.LoggerFactory.getLogger(Home.class);
+            logger.error("Arguments" + args[0] + args[2] + " must be an integer.");
             System.exit(1);
         }
     }

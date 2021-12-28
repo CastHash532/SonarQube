@@ -28,7 +28,7 @@ public class DatabaseServiceTest {
     public void testAddCity() {
         City city = new City(1,"Alger",300000000,"Belle ville");
         int i = DatabaseService.addCity(conn,city);
-        Assert.assertEquals(i,1);
+        Assert.assertEquals(1,i);
     }
 
    @Test

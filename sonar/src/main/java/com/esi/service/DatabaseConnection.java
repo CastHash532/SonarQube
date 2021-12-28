@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+//slf4j
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DatabaseConnection {
 
     private String USER;
@@ -60,6 +64,8 @@ public class DatabaseConnection {
             try{
                 if(stmt!=null) stmt.close();
             } catch(SQLException se2) {
+                Logger logger = LoggerFactory.getLogger(DatabaseConnection.class);
+                logger.error("Error closing the connection.", se2);
             }
         }
     }
