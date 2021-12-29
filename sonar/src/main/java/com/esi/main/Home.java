@@ -8,11 +8,28 @@ import java.sql.Connection;
 
 //slf4j
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+//properties
+import java.util.Properties;
+
 
 public class Home {
 
-    public static final String USER = "root";
-    public static final String PASSWORD = "root";
+    //load config.properties file
+    private static final Logger logger = LoggerFactory.getLogger(Home.class);
+
+    private static Properties properties = new Properties();
+    static {
+        try {
+            properties.load(Home.class.getClassLoader().getResourceAsStream("config.properties"));
+        } catch (Exception e) {
+            logger.error("Error while loading properties file", e);
+        }
+    }
+    
+    public static final String USER = properties.getProperty("user");
+    public static final String PASSWORD = properties.getProperty("password");
     public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     public static final String DB_URL = "jdbc:mysql://localhost:3306/citiesdb";
 

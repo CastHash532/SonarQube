@@ -15,6 +15,8 @@ public class DatabaseConnection {
     private String PASS;
     private String JDBC_DRIVER;
     private String DB_URL;
+    Logger logger = LoggerFactory.getLogger(DatabaseConnection.class);
+
 
     public DatabaseConnection(String USER, String PASS, String JDBC_DRIVER, String DB_URL) {
         this.USER = USER;
@@ -29,9 +31,9 @@ public class DatabaseConnection {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Class.forName(JDBC_DRIVER);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection failed", e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Driver not found", e);
         }
         return conn;
     }
@@ -40,7 +42,7 @@ public class DatabaseConnection {
         try {
             conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Disconnection failed", e);
         }
     }
 
@@ -57,15 +59,14 @@ public class DatabaseConnection {
             stmt.executeUpdate(sql);
             stmt.close();
         } catch(SQLException se) {
-            se.printStackTrace();
+            logger.error("Error while creating table", se);
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.error("Error while creating table", e);
         } finally {
-            try{
-                if(stmt!=null) stmt.close();
-            } catch(SQLException se2) {
-                Logger logger = LoggerFactory.getLogger(DatabaseConnection.class);
-                logger.error("Error closing the connection.", se2);
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+                logger.error("Error while creating table", se2);
             }
         }
     }

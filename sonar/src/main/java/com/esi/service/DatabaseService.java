@@ -18,6 +18,7 @@ public class DatabaseService {
     private static final String DESCRIPTION = "description";
     private static final String NAME = "name";
     private static final String ERROR_MESSAGE = "Error while executing query";
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseService.class);
 
     private DatabaseService() {
         throw new IllegalStateException("Utility class");
@@ -36,15 +37,15 @@ public class DatabaseService {
             i= pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error(ERROR_MESSAGE, se);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(ERROR_MESSAGE, e);
         } finally {
             try {
-                if (pstmt != null) pstmt.close();
-            } catch (SQLException se2) {
-                Logger logger = LoggerFactory.getLogger(DatabaseService.class);
-                logger.error(ERROR_MESSAGE, se2);
+                if (pstmt != null)
+                    pstmt.close();
+            } catch (SQLException se) {
+                logger.error(ERROR_MESSAGE, se);
             }
         }
         return i;
@@ -69,13 +70,15 @@ public class DatabaseService {
             rs.close();
             pstmt.close();
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error(ERROR_MESSAGE, se);
+        } catch (Exception e) {
+            logger.error(ERROR_MESSAGE, e);
         } finally {
             try {
-                if (pstmt != null) pstmt.close();
-            } catch (SQLException se2) {
-                Logger logger = LoggerFactory.getLogger(DatabaseService.class);
-                logger.error(ERROR_MESSAGE, se2);
+                if (pstmt != null)
+                    pstmt.close();
+            } catch (SQLException se) {
+                logger.error(ERROR_MESSAGE, se);
             }
         }
         return  city;
@@ -102,13 +105,15 @@ public class DatabaseService {
             rs.close();
             stmt.close();
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error(ERROR_MESSAGE, se);
+        } catch (Exception e) {
+            logger.error(ERROR_MESSAGE, e);
         } finally {
             try {
-                if (stmt != null) stmt.close();
-            } catch (SQLException se2) {
-                Logger logger = LoggerFactory.getLogger(DatabaseService.class);
-                logger.error(ERROR_MESSAGE, se2);
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se) {
+                logger.error(ERROR_MESSAGE, se);
             }
         }
         return  cities;
@@ -116,14 +121,15 @@ public class DatabaseService {
 // New method
 
     public static City getCityByName(Connection conn,String name) {
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
         City city = new City();
 
         try {
 
-            String sql = "SELECT * FROM City where name='"+name+"'";
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "SELECT * FROM City where name=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,name);
+            ResultSet rs = pstmt.executeQuery(sql);
             while (rs.next()) {
 
                 city.setIdCity(rs.getInt(IDCITY));
@@ -132,15 +138,17 @@ public class DatabaseService {
                 city.setDescription(rs.getString(DESCRIPTION));
             }
             rs.close();
-            stmt.close();
+            pstmt.close();
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error(ERROR_MESSAGE, se);
+        } catch (Exception e) {
+            logger.error(ERROR_MESSAGE, e);
         } finally {
             try {
-                if (stmt != null) stmt.close();
-            } catch (SQLException se2) {
-                Logger logger = LoggerFactory.getLogger(DatabaseService.class);
-                logger.error(ERROR_MESSAGE, se2);
+                if (pstmt != null)
+                    pstmt.close();
+            } catch (SQLException se) {
+                logger.error(ERROR_MESSAGE, se);
             }
         }
         return city;

@@ -14,3 +14,12 @@ mvn clean verify sonar:sonar \
   -Dsonar.host.url=http://localhost:9000 \
   -Dsonar.login=**AuthenticationToken**replace here
 ``
+
+## Work done:  
+### Before:  
+  
+![before](./sonar/before.png)  
+  
+### After: 
+  
+![after](./sonar/after.png)  

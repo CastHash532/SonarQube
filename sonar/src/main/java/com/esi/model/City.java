@@ -63,6 +63,11 @@ public class City {
                 touristNumber == city.touristNumber  &&
                 description.equals(city.description);
     }
+
+    @Override
+    public int hashCode() {
+        return idCity;
+    }
 }
 
 
